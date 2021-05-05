@@ -1,47 +1,39 @@
-/*Write java code to insert and retrieve the records from the database table.*/
-
+/*Write java code to insert  the records from the database table.*/
 
 import java.sql.*;
 import java.io.*;
+import java.sql.ResultSet;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-class MysqlCon{
+public class MySqlCon {
 public static void main(String args[]){
 try{
-Class.forName("com.mysql.jdbc.Driver");
+Class.forName("com.mysql.cj.jdbc.Driver");
 
-Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employee","root","12345");
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","12345");
 //here employee is the database name, root is the username and 12345 is the password
-Statement stmt=con.createStatement();
 
-ResultSet result=stmt.executeQuery("insert into student(student_id, student_name, student_dept) values('1','rohit','IT')");
+java.sql.Statement stmt=con.createStatement();
+//Execute a query
+System.out.println("Inserting records into the table...");          
+String sql = "INSERT INTO employee VALUES ( 'Auli', 'IT', 18)";
+stmt.executeUpdate(sql);
+sql = "INSERT INTO employee VALUES ( 'Pia', 'CSE', 25)";
+stmt.executeUpdate(sql);
+sql = "INSERT INTO employee VALUES ( 'Tara', 'MECH', 30)";
+stmt.executeUpdate(sql);
+sql = "INSERT INTO employee VALUES('Zubair', 'ECE', 28)";
+stmt.executeUpdate(sql);
+System.out.println("Inserted records into the table...");
 
-while(result.next())
-System.out.println(result.getInt(1)+"  "+result.getString(2)+"  "+result.getString(3));
 
 
-            String sql = "select * from student";
-           	PreparedStatement p = con.prepareStatement(sql);
-            result = p.executeQuery();
-  
-            // Printing id, name and dept
-            
-            System.out.println("student_id \t\t student_name \t\t student_dept");
-  
-            // Condiion check
-            while (result.next()) {
-  
-                int student_id = result.getInt("id");
-                String student_name = result.getString("name");
-                String dtudent_dept = result.getString("dept");
-                System.out.println("student_id \t\t student_name \t\t student_dept");
-            }
-        
-
-con.close();
-
-}catch(Exception e){ 
-	System.out.println(e);
 }
 
+
+catch(Exception e){ 
+	System.out.println(e);}
 }
 }
